@@ -72,7 +72,7 @@ export default function Login() {
     script.defer = true;
     script.onload = () => {
       window.google.accounts.id.initialize({
-        client_id: "976232983537-8ng23c3t1eaef60qvsukbql95bjfv397.apps.googleusercontent.com",   // <-- REPLACE with your real client ID
+        client_id: "YOUR_GOOGLE_CLIENT_ID",   // <-- REPLACE with your real client ID
         callback: handleGoogleCredential,
       });
       window.google.accounts.id.renderButton(googleBtnRef.current, {
