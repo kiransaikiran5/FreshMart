@@ -185,9 +185,9 @@ uvicorn app.main:app --reload
 
 # Frontend Setup
 
-cd ../frontend
-npm install
-npm run dev
+- cd ../frontend
+- npm install
+- npm run dev
 
 The frontend runs at http://localhost:517
 
