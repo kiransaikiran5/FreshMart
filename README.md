@@ -63,57 +63,121 @@ It supports real‑time notifications, Cashfree payments, loyalty rewards, advan
 git clone https://github.com/your-username/FreshMart.git
 cd FreshMart
 
- # Project Structure
+ ## 📁 Project Structure
 
+```
 FreshMart/
 ├── backend/
 │   ├── app/
-│   │   ├── api/          # FastAPI route files
-│   │   ├── models/       # SQLAlchemy models
-│   │   ├── schemas/      # Pydantic schemas
-│   │   ├── services/     # Business logic & pub‑sub
-│   │   ├── core/         # deps, security
-│   │   └── main.py       # App entry point
-│   ├── static/images/    # Product images (ignored by Git)
-│   └── requirements.txt
+│   │   ├── api/                # FastAPI route files
+│   │   │   ├── auth.py         #   Registration, login, JWT, Google OAuth
+│   │   │   ├── products.py     #   Product CRUD, search, filters
+│   │   │   ├── cart.py         #   Shopping cart endpoints
+│   │   │   ├── orders.py       #   Order placement, cancellation, returns
+│   │   │   ├── payments.py     #   Cashfree integration + verify
+│   │   │   ├── deliveries.py   #   Delivery tracking & updates
+│   │   │   ├── reviews.py      #   Product reviews & ratings
+│   │   │   ├── notifications.py#   REST + SSE real‑time notifications
+│   │   │   ├── admin.py        #   Admin dashboard & order management
+│   │   │   ├── chat.py         #   AI chat assistant
+│   │   │   ├── inventory.py    #   Stock levels & low‑stock alerts
+│   │   │   ├── categories.py   #   Category management (admin)
+│   │   │   ├── coupons.py      #   Discount coupons
+│   │   │   ├── wishlist.py     #   Customer wishlist
+│   │   │   ├── loyalty.py      #   Loyalty points & transactions
+│   │   │   ├── returns.py      #   Return / refund requests
+│   │   │   ├── delivery_slots.py # Delivery slot scheduling
+│   │   │   ├── campaigns.py    #   Promotional campaigns (admin)
+│   │   │   ├── analytics.py    #   Sales reports & business analytics
+│   │   │   └── recommendations.py # Personalised product recommendations
+│   │   ├── models/             # SQLAlchemy ORM models
+│   │   ├── schemas/            # Pydantic request/response schemas
+│   │   ├── services/           # Business logic & SSE pub‑sub
+│   │   ├── core/               # Security (JWT, hashing), dependencies
+│   │   ├── utils/              # Timezone helpers
+│   │   └── main.py             # FastAPI application entry point
+│   ├── static/
+│   │   └── images/             # Uploaded product images (ignored by Git)
+│   └── requirements.txt        # Python dependencies
 ├── frontend/
 │   ├── src/
-│   │   ├── components/   # Reusable React components
-│   │   ├── context/      # Auth, Cart, Wishlist, etc.
-│   │   ├── pages/        # Page components
-│   │   └── services/     # Axios API calls
+│   │   ├── components/         # Reusable UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── NotificationBell.jsx
+│   │   │   ├── ChatWidget.jsx
+│   │   │   ├── StarRating.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   └── ImageWithFallback.jsx
+│   │   ├── context/            # React Context providers
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── CartContext.jsx
+│   │   │   ├── WishlistContext.jsx
+│   │   │   ├── NotificationContext.jsx
+│   │   │   └── ToastContext.jsx
+│   │   ├── pages/              # Page components
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Products.jsx
+│   │   │   ├── ProductDetail.jsx
+│   │   │   ├── Cart.jsx
+│   │   │   ├── Checkout.jsx
+│   │   │   ├── Payment.jsx
+│   │   │   ├── PaymentResult.jsx
+│   │   │   ├── OrderHistory.jsx
+│   │   │   ├── DeliveryTracking.jsx
+│   │   │   ├── NotificationsPage.jsx
+│   │   │   ├── Wishlist.jsx
+│   │   │   ├── Loyalty.jsx
+│   │   │   ├── Returns.jsx
+│   │   │   ├── AuthCallback.jsx
+│   │   │   ├── NotFound.jsx
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── AdminProducts.jsx
+│   │   │   ├── AdminOrders.jsx
+│   │   │   ├── AdminInventory.jsx
+│   │   │   ├── AdminCategories.jsx
+│   │   │   ├── AdminCoupons.jsx
+│   │   │   ├── AdminReturns.jsx
+│   │   │   ├── AdminDeliverySlots.jsx
+│   │   │   ├── AdminCampaigns.jsx
+│   │   │   └── AdminAnalytics.jsx
+│   │   └── services/
+│   │       └── api.js          # Axios instance & all API calls
 │   ├── public/
-│   └── package.json
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.js
 ├── .gitignore
 └── README.md
+```
 
 ## Backend Setup
 cd backend
 python -m venv venv
 
-### venv\Scripts\activate      # Windows
-### source venv/bin/activate  # Mac/Linux
+### venv\Scripts\activate       # Windows
+### source venv/bin/activate    # Mac/Linux
 
 pip install -r requirements.txt
 
 # Create a .env file inside backend/ with the following variables
 
-DATABASE_URL=mysql+aiomysql://root:password@localhost/freshmart_db
-SECRET_KEY=your-secret-key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-REFRESH_TOKEN_EXPIRE_DAYS=7
+- DATABASE_URL=mysql+aiomysql://root:password@localhost/freshmart_db
+- SECRET_KEY=your-secret-key
+- ALGORITHM=HS256
+- ACCESS_TOKEN_EXPIRE_MINUTES=30
+- REFRESH_TOKEN_EXPIRE_DAYS=7
 
 # Google OAuth (optional)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GOOGLE_REDIRECT_URI=http://localhost:8000/api/v1/auth/google/callback
-FRONTEND_URL=http://localhost:5173
+- GOOGLE_CLIENT_ID=
+- GOOGLE_CLIENT_SECRET=
+- GOOGLE_REDIRECT_URI=http://localhost:8000/api/v1/auth/google/callback
+- FRONTEND_URL=http://localhost:5173
 
 # Cashfree (optional)
-CASHFREE_APP_ID=
-CASHFREE_SECRET_KEY=
-CASHFREE_ENV=sandbox
+- CASHFREE_APP_ID=
+- CASHFREE_SECRET_KEY=
+- CASHFREE_ENV=sandbox
 
 # Backend server Run
 
@@ -129,8 +193,8 @@ The frontend runs at http://localhost:517
 
 # Cashfree Payment Testing
 
-Create a Cashfree sandbox account and obtain App ID and Secret Key.
-Add them to backend/.env.
+- Create a Cashfree sandbox account and obtain App ID and Secret Key.
+- Add them to backend/.env.
 
 # Google OAuth
 
