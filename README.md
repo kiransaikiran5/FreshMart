@@ -152,13 +152,27 @@ FreshMart/
 ```
 
 ## Backend Setup
+'''
 cd backend
 python -m venv venv
+'''
 
 ### venv\Scripts\activate       # Windows
 ### source venv/bin/activate    # Mac/Linux
 
 pip install -r requirements.txt
+
+# Backend server Run
+
+uvicorn app.main:app --reload
+
+# Frontend Setup
+
+- cd ../frontend
+- npm install
+- npm run dev
+
+The frontend runs at http://localhost:517
 
 # Create a .env file inside backend/ with the following variables
 
@@ -178,18 +192,6 @@ pip install -r requirements.txt
 - CASHFREE_APP_ID=
 - CASHFREE_SECRET_KEY=
 - CASHFREE_ENV=sandbox
-
-# Backend server Run
-
-uvicorn app.main:app --reload
-
-# Frontend Setup
-
-- cd ../frontend
-- npm install
-- npm run dev
-
-The frontend runs at http://localhost:517
 
 # Cashfree Payment Testing
 
