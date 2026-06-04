@@ -1,0 +1,48 @@
+# ------------------------------
+# Python (backend)
+# ------------------------------
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.env
+env/
+venv/
+.env
+*.db
+*.sqlite3
+*.log
+.env.*
+
+# ------------------------------
+# Node (frontend)
+# ------------------------------
+node_modules/
+dist/
+.vite/
+*.local
+
+# ------------------------------
+# IDE & OS files
+# ------------------------------
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Other sensitive files
+# ------------------------------
+*.pem
+
+# Ignore ALL uploaded product images (keep the folder structure)
+backend/static/images/*
+!backend/static/images/.gitkeep
+
+backend/app/static/images/*
+!backend/app/static/images/.gitkeep
